@@ -22,11 +22,10 @@ function buildColumn($posts) {
   foreach ($posts as $post) {
     $month = date("F", strtotime ($post['date']));
     
-    if (!in_array($month, $res))
+    if (!key_exists($month, $res))
       $res[$month] = array();
     $res[$month][] = $post;
   }
-
   // build view
   $vieliebTemplate = new View();
   $vieliebTemplate->posts = $res;
@@ -40,6 +39,7 @@ $sarahColumn = buildColumn($dao->getPosts(2));
 
 // build lauout with content
 $layout = new View();
+$layout->flash = $flash;
 $layout->pcontent = $vieliebColumn;
 $layout->scontent = $sarahColumn;
 

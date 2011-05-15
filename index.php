@@ -17,9 +17,6 @@ $sarah = 2;
 	
 	<div id="wrapper">
 	<?php
-	
-		
-
 		if(isset($_POST) && !empty($_POST)) {
 			$user = ($_POST['vielieb']) ? $vielieb : $sarah;
 			$val = ($_POST['vielieb']) ? $_POST['vielieb'] : $_POST['sarah'];
@@ -40,6 +37,7 @@ $sarah = 2;
 	?>
 		<div id="header"><h3>Wooohiii</h3></div>
 			<div id="content">
+			
 				<div class="content-header">
 					<div id="vielieb">
 						<h2>Vielieb</h2>
@@ -53,21 +51,21 @@ $sarah = 2;
 						$q = "SELECT * from money WHERE user_id='1' ORDER by date";
 						$res = mysql_query($q);
 						$month = '';
+						$betrag = 0;
 						while($row = mysql_fetch_array($res)){
 							$month2 = date("F", strtotime ($row['date']));	
-							if($month2 == $month) {
-							
+							if($month2 == $month) {							
 							} else {
 								$month = $month2;
+								$betrag = 0;
 								
 								?>
-								<div class="month" onClick="toggleMonth(<?php echo $month; ?>);"><?php echo $month; ?><span class="arrow">&#62;&#62;</span></div>
-								
+								<div class="month" onClick="toggleMonth(<?php echo $month; ?>);"><?php echo $month; ?><span class="arrow">&#62;&#62;</span></div>		
 								<?php
 							}
 							$thisMonth = date("F");
 							$now = ($thisMonth == $month) ? true : false;
-							
+							$betrag = $betrag + $row['value'];
 							?>
 								<div class="entry <?php if($now) echo "now"; ?>" id="<?php echo $month; ?>">
 								<span class="value"><?php echo $row['value']; ?> </span>

@@ -2,7 +2,7 @@
 
 	$DatabaseHost = 'localhost';
 	$DatabaseUser = 'root';
-	$DatabasePassword = 'df';
+	$DatabasePassword = '';
 	$Database = 'finance';
 
 ?>

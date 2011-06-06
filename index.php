@@ -40,8 +40,13 @@ $sarahColumn = buildColumn($dao->getPosts(2));
 // build lauout with content
 $layout = new View();
 $layout->flash = $flash;
-$layout->pcontent = $vieliebColumn;
-$layout->scontent = $sarahColumn;
+//$layout->pcontent = $vieliebColumn;
+//$layout->scontent = $sarahColumn;
+
+$login = new View();
+
+
+$layout->login = $login->render('login.php');
 
 // output of complete site:
 echo $layout->render('layout.php');

@@ -5,8 +5,19 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <div id="wrapper">
-	<?php echo $this->login?>
-  </div>
+
+    <?php if($_SESSION['loggedin'] === true):?>
+        <a href="?logout">logout</a>
+    <?php endif?>
+
+    <div class="flash">
+        <?php foreach($this->flash as $msg):?>
+            <?php echo $msg?>
+        <?php endforeach?>
+    </div>
+
+    <div id="wrapper">
+        <?php echo $this->content?>
+    </div>
 </body>
 </html>

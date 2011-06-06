@@ -5,4 +5,7 @@
 	$DatabasePassword = '';
 	$Database = 'finance';
 
+	$users = array(
+            'email' => 'password'
+        );
 ?>

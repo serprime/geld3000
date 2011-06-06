@@ -13,9 +13,12 @@ class Dao {
   public $vielieb = 1;
   public $sarah = 2;
   public $con;
+  public $users;
 
   function __construct() {
     $this->initDatabase();
+    include('db_config.php');
+    $this->users = $users;
   }
 
   // open db connection and select db
@@ -28,7 +31,21 @@ class Dao {
     mysql_select_db($Database) or die(mysql_error());
   }
   
-  
+  // check credntials
+  public function login($email, $password) {
+    if (key_exists($email, $this->users) && $this->users[$email] == $password) {
+        $_SESSION['loggedin'] = true;
+        return "eingeloogt...";
+    }
+    $_SESSION['loggedin'] = false;
+    return "ungueltiges passwort oder email oder so..";
+  }
+
+  public function logout() {
+    $_SESSION['loggedin'] = false;
+    session_destroy();
+  }
+
   // get vals from POST and save
   public function save($post) {
     $user = ($_POST['vielieb']) ? $this->vielieb : $this->sarah;

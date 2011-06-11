@@ -316,3 +316,8 @@ padding-top: 50px;
 	width:270px;
 	margin-right:5px;
 }
+
+#diff {
+  text-align: center;
+  background: #fec;
+}

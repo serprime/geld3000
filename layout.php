@@ -5,8 +5,7 @@
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-
-    <?php if($_SESSION['loggedin'] === true):?>
+    <?php if(key_exists('loggedin', $_SESSION) && $_SESSION['loggedin'] === true):?>
         <a href="?logout">logout</a>
     <?php endif?>
 

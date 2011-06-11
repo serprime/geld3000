@@ -31,32 +31,37 @@ class Dao {
     mysql_select_db($Database) or die(mysql_error());
   }
   
-  // check credntials
-  public function login($email, $password) {
-    if (key_exists($email, $this->users) && $this->users[$email] == $password) {
+  // check credentials
+  public function login($username, $password) {
+    if (key_exists($username, $this->users) && $this->users[$username] == $password) {
         $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $username;
+        if ($username == 'vielieb') $_SESSION['user_id'] = 1;
+        elseif ($username == 'sarah') $_SESSION['user_id'] = 2;
         return "eingeloogt...";
     }
     $_SESSION['loggedin'] = false;
+    $_SESSION['username'] = '';
     return "ungueltiges passwort oder email oder so..";
   }
 
   public function logout() {
     $_SESSION['loggedin'] = false;
+    $_SESSION['username'] = '';
     session_destroy();
   }
 
   // get vals from POST and save
   public function save($post) {
-    $user = ($_POST['vielieb']) ? $this->vielieb : $this->sarah;
-    $val = ($_POST['vielieb']) ? $_POST['vielieb'] : $_POST['sarah'];
-    $comment = ($_POST['v_text']) ? $_POST['v_text'] : $_POST['s_text'];
+    $user_id = $_SESSION['user_id'];
+    $val = $_POST['v_value'];
+    $comment = $_POST['v_text'];
     $val = (str_replace(',', '.', $val));
     
     if( !is_numeric($val) )
       return "He du Oasch, des war jetzt aber ka Zahl!";
 
-    $q = sprintf("INSERT INTO money (user_id, value, comment) VALUES (%s, %s, '%s')", $user, $val, $comment);
+    $q = sprintf("INSERT INTO money (user_id, value, comment) VALUES (%s, %s, '%s')", $user_id, $val, $comment);
     if (mysql_query($q)) {
       return "ok, eintrag sollte in der db sein.";
     } else {
@@ -74,6 +79,31 @@ class Dao {
       $ret[] = $row;
     }
     return $ret;
+  }
+  
+  public function calcDiff() {
+    $names = array(1=>'vielieb', 2=>'sarah');
+    $q = "SELECT user_id, sum(value) as sum FROM money GROUP BY user_id";
+    $result = mysql_query($q);
+    while ($row = mysql_fetch_assoc($result)) {
+      $user_id = $row['user_id'];
+      $amount = $row['sum'];
+      $res[$user_id] = $amount;
+    }
+    if ($res[1] > $res[2]) {
+      $u = $names[1];
+      $a = $res[1] - $res[2];
+    } elseif ($res[2] > $res[1]) {
+      $u = $names[2];
+      $a = $res[2] - $res[1];
+    } else {
+      $u = "Niemand";
+      $a = 0;
+    }
+    return array(
+      'diffUsername' => $u,
+      'diffAmount' => $a
+    );
   }
 
 }

@@ -1,9 +1,8 @@
-
 <div id="login-container">
 	<div id="login-form" class="form right" >
-		<form method="post" action="" class="right" >
+		<form method="post" action="?" class="right" >
 			<label for="email" class="login">E-Mail</label>
-			<input class="right" type="text" name="login-email" />
+			<input class="right" type="text" name="login-name" />
 			<div class="clear"></div>
 			<label for="passwort" class="login">Passwort</label>
 			<input class="right" type="password" name="login-password" />

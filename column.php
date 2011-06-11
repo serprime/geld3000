@@ -1,4 +1,5 @@
-<?php $thisMonth = date("F")?>
+<p><?php echo $this->username?></p>
+<?php $thisMonth = date("F Y")?>
 <?php foreach($this->posts as $month=>$posts):?>
   <div class="month" 
        onClick="toggleMonth(<?php echo $month; ?>);">
@@ -12,4 +13,5 @@
 		  <div class="clear"></div>
 		</div>
 	<?php endforeach?>				    
+	<div class="monthly-sum">Summe: <?php echo $this->sums[$month]?></div>
 <?php endforeach?>

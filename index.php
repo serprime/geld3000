@@ -2,6 +2,7 @@
 
 require_once('./dao.class.php');
 require_once('./view.class.php');
+require_once('./helper.php');
 
 $flash = array();
 $dao = new Dao();
@@ -17,46 +18,34 @@ if (isset($_GET) && key_exists('logout', $_GET)) {
 if (isset($_POST) && !empty($_POST)) {
     if(isset($_POST['login-submit'])) {
         // login form
-        $flash[] = $dao->login($_POST['login-email'], $_POST['login-password']);
+        $flash[] = $dao->login($_POST['login-name'], $_POST['login-password']);
     } else {
         // form for posting a finance dingelings
         $flash[] = $dao->save($_POST);
     }
 }
 
-if ($_SESSION['loggedin'] !== true) {
-    $login = new View();
-    $layout->content = $login->render('login.php');
-} else {
+if (key_exists('loggedin', $_SESSION) && $_SESSION['loggedin'] === true) {
     // display seite ganz normal
     $vieliebColumn = buildColumn($dao->getPosts(1));
     $sarahColumn = buildColumn($dao->getPosts(2));
-    $layout->content = $vieliebColumn . $sarahColumn;
+    $mainTemplate = new View();
+    $mainTemplate->pcol = $vieliebColumn;
+    $mainTemplate->scol = $sarahColumn;
+    // diff username and amount
+    $diff = $dao->calcDiff();
+    $mainTemplate->diffUsername = $diff['diffUsername'];
+    $mainTemplate->diffAmount = $diff['diffAmount'];
+    $layout->content = $mainTemplate->render('main.php');
+} else {
+    $login = new View();
+    $layout->content = $login->render('login.php');
 }
 
 $layout->flash = $flash;
 
 // seite an den browser schicken
 echo $layout->render('layout.php');
-
-
-
-
-// zaumbaun der posts nach monat
-function buildColumn($posts) {
-  $res = array();
-  foreach ($posts as $post) {
-    $month = date("F", strtotime ($post['date']));
-
-    if (!key_exists($month, $res))
-      $res[$month] = array();
-    $res[$month][] = $post;
-  }
-  // build view
-  $columnTemplate = new View();
-  $columnTemplate->posts = $res;
-  return $columnTemplate->render('column.php');
-}
 
 ?>
 

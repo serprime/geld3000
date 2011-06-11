@@ -7,7 +7,7 @@
   </head>
   <body>
 
-      <div class="flash">
+      <div class="error">
           <?php foreach($this->flash as $msg):?>
               <?php echo $msg?>
           <?php endforeach?>

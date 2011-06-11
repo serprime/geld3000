@@ -106,7 +106,7 @@ body {
 	font-size: 14px;
 	background: url('images/master_bg.jpg') repeat;
 	font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
-	color: #333;
+	color: #3b3b3b;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -133,14 +133,33 @@ h1, h2, h3, h4, h5, h6 {
 	float: right;
 }
 
+a {
+    text-decoration: none;
+}
+
 .error {
 	padding: 4px;
-	background-color: #e7594f;
-	border: 1px solid #c10b00;
+	background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0.19, rgb(219,94,88)),
+            color-stop(0.6, rgb(233,106,100)),
+            color-stop(0.8, rgb(219,94,88))
+        );
+        background-image: -moz-linear-gradient(
+            center bottom,
+            rgb(219,94,88) 19%,
+            rgb(233,106,100) 60%,
+            rgb(219,94,88) 80%
+        );
+
+	border: 1px solid #ab2626;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 	font-size: 14px;
-	font-weight: bold;
+        color: #5e1313;
+        width:465px;
 }
 
 #wrapper {
@@ -225,96 +244,57 @@ label.login {
 input[type="submit"].login {
 	margin-top: 25px;
 }
-/************OLD stuff*********/
 
+/*** MAIN SITE ***/
 
-#header{
-	width: 100%;
-	height: 150px;
-	border-bottom: 1px solid #ccc;
+/* ALLGEMEIN */
+div.main {
+  background: rgba(240,240,240,.6);
+  padding: 20px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 10px 2px rgba(33,33,33,.3);
+  margin-top:65px;
+  z-index: 2;
+  position: relative;
 }
 
-#header h3 {
-padding-top: 50px;
-	font-size: 72px; 
+/* HEAD */
+header {
+    float: right;
+    margin-right:10px;
+    width:100%;
 }
 
-#header *{
-	vertical-align: center;
+header div.header_title {
+    padding:10px 10px 4px;
+    border-radius: 5px 5px 0 0;
+    background: rgba(236,236,236,.8);
+    position: relative;
+    box-shadow: 1px -2px 3px rgba(33,33,33,.20);
+    z-index: 1;
+    float:right;
 }
 
-#content {
-	margin-top: 20px;
+header div.header_title img {
+    width: 253px;
+    height: 50px;
 }
 
-.content-header {
-	/*border-bottom: 1px solid #ccc;*/
-	padding-bottom: 15px;
+header div.header_logout {
+    margin-top:37px;
+    position: relative;
+    float:right;
+    z-index: 0;
+    padding:8px 18px 6px;
+    border-radius: 0px 5px 0 0;
+    background: rgba(236,236,236,.8);
+    box-shadow: 1px -2px 3px rgba(33,33,33,.20);
 }
 
-#vielieb{
-	float: left;
-	width: 420px;
-}
-#sarah{
-	float: right;
-	width: 420px;
-}
-
-
-
-.line{
-	width: 420px;
-	height:10px;
-	border-bottom: 1px solid #ccc;
-	margin-bottom: 25px;
-}
-
-.line.long {
-	width: 480px;
-	height:10px;
-	border-bottom: 1px solid #ccc;
-}
-
-
-
-.month {
-	font-size: 14px;
-	letter-spacing:2px;
-	background-color: #f8f8f8;
-	cursor:pointer;
-	text-transform:uppercase;
-	padding:3px;
-	border: 1px solid #ccc;
-	width:400px;
-	margin: 15px 0;
-	font-weight:bold;
-}
-
-.entry.now{
-	display:block;
-}
-
-.arrow{
-	float:right;
-	margin-right:5px;
-}
-
-.entry {
-	margin-bottom: 10px;
-	display:none;
-}
-
-.value {
-	float: left;
-	width: 100px;
-	margin-left:5px;
-}
-
-.comment {
-	float:right;
-	width:270px;
-	margin-right:5px;
+header div.header_logout a {
+    font-size: 14px;
+    color: #3b3b3b;
+    margin-bottom:5px;
 }
 
 #diff {
@@ -348,5 +328,10 @@ div.main {
 .dialog-header {
   background: #33f;
   padding: 3px;
+}
+
+header div.header_logout a:link:hover {
+    color:#3b3b3b;
+    text-decoration: underline;
 }
 

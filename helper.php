@@ -1,7 +1,7 @@
 <?php
 
 // zaumbaun der posts nach monat
-function buildColumn($posts) {
+function buildColumn($posts, $id) {
   $res = array();
   foreach ($posts as $post) {
     $month = date("F Y", strtotime ($post['date']));
@@ -21,6 +21,7 @@ function buildColumn($posts) {
   }
   // build view
   $columnTemplate = new View();
+  $columnTemplate->id = $id;
   $columnTemplate->posts = $res;
   $columnTemplate->sums = $sums;
   return $columnTemplate->render('column.php');

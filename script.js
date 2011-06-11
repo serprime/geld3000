@@ -1,11 +1,20 @@
-function toggleMonth(elem){
+function toggleMonth(elem_id){
 	
-	var display = ($(elem).css('display'));
+	var display = ($("#"+elem_id).css('display'));
 	if(display == 'none') {
-		$(elem).show("slow");
-		//$(elem).css('display', 'inline');
+		$("#"+elem_id).show("slow");
 	} else {
-		$(elem).hide("slow");
-		//$(elem).css('display', 'none');
+		$("#"+elem_id).hide("slow");
 	}
+}
+
+
+function edit(id) {
+  $('#edit-form').show();
+}
+
+function editEntry() {
+  // get values from form
+  // post back to server with entry id
+  // close dialog if success
 }

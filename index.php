@@ -27,8 +27,8 @@ if (isset($_POST) && !empty($_POST)) {
 
 if (key_exists('loggedin', $_SESSION) && $_SESSION['loggedin'] === true) {
     // display seite ganz normal
-    $vieliebColumn = buildColumn($dao->getPosts(1));
-    $sarahColumn = buildColumn($dao->getPosts(2));
+    $vieliebColumn = buildColumn($dao->getPosts(1), 1);
+    $sarahColumn = buildColumn($dao->getPosts(2), 2);
     $mainTemplate = new View();
     $mainTemplate->pcol = $vieliebColumn;
     $mainTemplate->scol = $sarahColumn;

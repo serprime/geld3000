@@ -31,3 +31,19 @@
   </div>
   <div class="clear"></div>
 </div>
+
+<div id="edit-form" style="display: none;">
+  <div class="dialog-frame">
+    <div class="dialog-header">
+      <span>Eintrag bearbeiten</span><a href="../" onClick="closeEditDialog(); return false;">X</a>
+    </div>
+    <div class="dialog-body">
+      <form method="post" action="?">
+        <input type="hidden" value="" name="v_id" />
+        <input type="text" name="v_value" /><br />
+        <textarea name="v_text"></textarea><br />
+        <input type="submit" onClick="editEntry(); return false;" value="hinzu" />
+      </form>
+    </div>
+  </div>
+</div>

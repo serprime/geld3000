@@ -1,13 +1,15 @@
+  <header>
+    <div class="header_logout"><a href="?logout">logout</a></div>
+    <div class="header_title"><img src="images/woohi.png" alt="woohi" /></div>
+  </header>
 <div class="main">
-  <div id="header">
-    <h3>Wooohiii</h3>
-  </div>
+
 
   <div class="content-header">
   </div> 
 
   <div class="logout">
-      <a href="?logout">logout</a>
+     
   </div>
 
   <form method="post" action="?">

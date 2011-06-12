@@ -49,7 +49,7 @@
       </div>
       <div class="content_box_schrage right"></div>
        <div class="clear"></div>
-       <div class="content_box_contentWrapper"><?php echo $this->pcol?></div>
+       <div class="content_box_contentWrapper"><?php echo $this->scol?></div>
   </div>
  <div class="clear"></div>
 <div id="edit-form" style="display: none;">

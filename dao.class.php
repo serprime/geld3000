@@ -55,7 +55,7 @@ class Dao {
   public function save($post) {
     $user_id = $_SESSION['user_id'];
     $val = $_POST['value'];
-    $comment = $_POST['notes'];
+    $comment = addslashes(htmlentities($_POST['notes'], ENT_QUOTES, 'utf-8'));
     $val = (str_replace(',', '.', $val));
     
     if( !is_numeric($val) )
@@ -76,8 +76,13 @@ class Dao {
     $result = mysql_query($q);
     $ret = array();
     while ($row = mysql_fetch_assoc($result)) {
+      if($row['user_id'] != $_SESSION['user_id']) {
+        $row['user_id'] = '';
+      }
       $ret[] = $row;
     }
+   
+
     return $ret;
   }
   

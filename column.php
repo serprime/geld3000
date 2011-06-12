@@ -16,14 +16,15 @@
         <div class="sub_entry">
 		    <div class="item-left left">
 		      <span class="value"><?php echo $post['value']; ?> </span><br />
-		      <a href="edit/<?php echo $post['money_id']?>" 
-		         onClick="edit(<?php echo $post['money_id']?>); return false;">Edith</a>
+                     <div class="edit left" title="Eintrag bearbeiten" onClick="edit(<?php echo $post['money_id']?>); return false;"></div>
+		      <div class="delete left" title="Eintrag löschen" ></div>
 		    </div>
-        <span class="comment right"><?php echo htmlspecialchars($post['comment'])?> </span>
+            <span class="comment right"><?php echo utf8_encode($post['comment'])?> </span>
 		    <div class="clear"></div>
+                    <div class="sub_entry_line"></div>
           </div>
 	  <?php endforeach?>				    
-	  <div class="monthly-sum">Summe: <?php echo $this->sums[$month]?></div>
+	  <div class="monthly-sum">Summe: €&nbsp;<span style="font-size:16px"><?php echo $this->sums[$month]?></span></div>
 
   </div>
 	

@@ -100,6 +100,10 @@ class Dao {
       $u = "Niemand";
       $a = 0;
     }
+
+    $a = sprintf("%.2f", $a);
+    $a = str_replace('.', ',', $a);
+   
     return array(
       'diffUsername' => $u,
       'diffAmount' => $a

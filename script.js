@@ -8,7 +8,6 @@ function toggleMonth(elem_id){
 	}
 }
 
-
 function edit(id) {
   $('#edit-form').show();
 }

@@ -523,11 +523,44 @@ header div.header_logout a:link:hover {
 
 .sub_entry {
     padding-bottom:10px;
+
 }
 
+.sub_entry_line {
+    height: 1px;
+    width:371px;
+    margin-top: 10px;
+    background: url('images/entry_border.png') no-repeat;
+}
 .item_left {
     width: 70px;
     margin-right: 5px;
+}
+
+.edit {
+    width:16px;
+    height:16px;
+    background: url('images/pen_normal.png') no-repeat;
+    padding:4px;
+     margin-top: 4px;
+}
+
+.edit:hover, .edit:focus {
+    cursor: pointer;
+    background: url('images/pen_hover.png') no-repeat;
+}
+
+.delete {
+    width:13px;
+    height:16px;
+    background: url('images/delete_normal.png') no-repeat;
+    padding:4px;
+    margin-top: 4px;
+}
+
+.delete:hover, .delete:focus {
+    cursor:pointer;
+    background: url('images/delete_hover.png') no-repeat;
 }
 
 .comment {
@@ -535,7 +568,7 @@ header div.header_logout a:link:hover {
 }
 
 .monthly-sum {
-    margin: 10px 5px;
+    margin: 0px 5px 10px;
     text-align: right;
     color: #385f96;
 }

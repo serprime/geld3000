@@ -1,14 +1,16 @@
 <?php $thisMonth = date("F Y")?>
 
 <?php foreach($this->posts as $month=>$posts):?>
+
+  <?php $now = ($thisMonth == $month) ? true : false ?>
+
   <?php $id = str_replace(' ', '_', $month)."_".$this->id?>
   <div class="month" id="span_<?php echo $id; ?>"
-       onClick="toggleMonth('<?php echo $id?>'); changeArrow(this);">
-       <span><?php echo $month; ?></span><span class="arrow right closed"></span>
+       onClick="toggleMonth('<?php echo $id?>');">
+       <span><?php echo $month; ?></span><span class="arrow right <?php echo ($now)? 'open' : 'closed'?>"></span>
   </div>
   
-  <?php $now = ($thisMonth == $month) ? true : false ?>
-    <div class="entry <?php if($now) echo 'now'; ?>" id="<?php echo $id?>">
+  <div class="entry <?php if($now) echo 'now'; ?>" id="<?php echo $id?>">
 
     <?php foreach($posts as $post):?>
         <div class="sub_entry">

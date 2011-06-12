@@ -54,14 +54,14 @@ class Dao {
   // get vals from POST and save
   public function save($post) {
     $user_id = $_SESSION['user_id'];
-    $val = $_POST['v_value'];
-    $comment = $_POST['v_text'];
+    $val = $_POST['value'];
+    $comment = $_POST['notes'];
     $val = (str_replace(',', '.', $val));
     
     if( !is_numeric($val) )
       return "He du Oasch, des war jetzt aber ka Zahl!";
 
-    $q = sprintf("INSERT INTO money (user_id, value, comment) VALUES (%s, %s, '%s')", $user_id, $val, $comment);
+    echo $q = sprintf("INSERT INTO money (user_id, value, comment) VALUES (%s, %s, '%s')", $user_id, $val, $comment);
     if (mysql_query($q)) {
       return "ok, eintrag sollte in der db sein.";
     } else {

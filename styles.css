@@ -107,6 +107,8 @@ body {
 	background: url('images/master_bg.jpg') repeat;
 	font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
 	color: #3b3b3b;
+        width:100%;
+        height:100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -137,8 +139,23 @@ a {
     text-decoration: none;
 }
 
-.error {
-	padding: 4px;
+#head_wrap {
+    position: relative;
+    height:auto;
+}
+
+.message {
+    padding: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-size: 14px;
+    width:465px;
+    position: absolute;
+    bottom: -60px;
+    left: 20px;
+}
+.message.error {
+        display: none;
 	background-image: -webkit-gradient(
             linear,
             left bottom,
@@ -153,20 +170,35 @@ a {
             rgb(233,106,100) 60%,
             rgb(219,94,88) 80%
         );
-
-	border: 1px solid #ab2626;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	font-size: 14px;
-        color: #5e1313;
-        width:465px;
+	border: 1px solid #ab2626;	
+        color: #5e1313;    
 }
 
+.message.success {
+        display: none;
+    	background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0.19, rgb(175,209,84)),
+            color-stop(0.6, rgb(185,221,89)),
+            color-stop(0.8, rgb(175,209,84))
+        );
+        background-image: -moz-linear-gradient(
+            center bottom,
+            rgb(175,209,84) 19%,
+            rgb(185,221,89) 60%,
+            rgb(175,209,84) 80%
+        );
+	border: 1px solid #99b746;
+        color: #667b2d;
+}
 #wrapper {
 	width: 900px;
 	margin: 0 auto;
 	padding-top: 30px;
 }
+
 
 /*** FORM ***/
 label {
@@ -215,7 +247,7 @@ input[type="submit"]:hover, input[type="submit"]:focus {
 }
 
 #login-container form {
-	width: 417px;
+	width: 440px;
 	padding-top: 90px;
 }
 
@@ -362,7 +394,11 @@ header div.header_logout a:link:hover {
     width:408px;
 }
 
-#eintrag_form input[type=text] {
+.dialog-body textarea {
+    width: 413px;
+}
+
+#eintrag_form input[type=text], .dialog-body input[type=text] {
     width: 130px;
 }
 
@@ -489,8 +525,13 @@ header div.header_logout a:link:hover {
             rgb(95,91,80) 98%
         );
    margin-top:5px;
+   position: relative;
+   z-index: 5;
 }
 
+.month.open {
+    border-radius: 3px 3px 0 0;
+}
 
 .month span {
     color: #f5f5f4;
@@ -519,6 +560,19 @@ header div.header_logout a:link:hover {
 .entry {
     margin: 10px 5px;
     font-size:13px;
+    display: none;
+}
+
+.entry.now {
+    display:block;
+}
+
+.entry_border {
+    position:relative;
+    z-index:0;
+    border: 1px solid #d9d9da;
+    margin-top:-2px;
+    border-radius:0 0 3px 3px;
 }
 
 .sub_entry {
@@ -573,27 +627,58 @@ header div.header_logout a:link:hover {
     color: #385f96;
 }
 /* POP UP EDIT */
+#overlay {
+    margin:0 auto;
+    position: fixed;
+    z-index:20;
+    top: 0;
+    left: 0;
+    display:none;
+    background-color: rgba(0,0,0,.70);
+    width: 100%;
+    height: 100%;
+}
 #edit-form {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(50,50,50,.7);
 }
 
 .dialog-frame {
-  width: 500px;
-  height: 200px;
-  margin: auto, auto;
+  width: 545px;
+  height: 280px;
   border-radius: 3px;
-  border: 1px solid #333;
+  background-color: #fff;
 }
 
 .dialog-header {
-  background: #33f;
+   background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0.20, rgb(41,73,120)),
+            color-stop(0.90, rgb(89,130,189))
+        );
+  border-radius: 3px 3px 0 0;
+  border: 1px solid rgb(41,73,120);
   padding: 3px;
+  height:25px;
+  font-size:14px;
+  line-height:20px;
+  vertical-align: middle;
+  color: #fff;
 }
 
+.dialog-body {
+    padding: 15px;
+    border:1px soldi #333;
+}
 
+.close {
+    color: #fff;
+    font-size:16px;
+    margin-right:5px;
+}
 
+.close:hover, .close:focus {
+    cursor: pointer;
+}

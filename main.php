@@ -1,10 +1,15 @@
-
+<div id="head_wrap">
+<div class="message error">
+ </div>
+<div class="message success">
+</div>
 <nav>
     <header>
         <div class="header_logout"><a href="?logout">logout</a></div>
         <div class="header_title"><img src="images/woohi.png" alt="woohi" /></div>
     </header>
 </nav>
+</div>
 <div class="main">
     <div class="content_header">
         <div class="info_box">
@@ -18,10 +23,10 @@
         <div id="eintrag_form">
           <form method="post" action="?">
               <label for="betrag" class="eintrag_form_label left">Betrag</label>
-              <input class="left" type="text" name="value" /><span class="euro left">€</span><br /><div class="clear"></div>
+              <input id="addValue" class="left" type="text" name="value" /><span class="euro left">€</span><br /><div class="clear"></div>
               <label for="notes" class="eintrag_form_label left">Notes</label>
-            <textarea class="left" name="notes"></textarea><br />
-            <input type="submit" class="right" value="" />
+            <textarea class="left" id="addNote" name="notes"></textarea><br />
+            <input type="submit" onClick="addEntry();return false;" class="right" value="" />
           </form>
         </div>
     </div>
@@ -52,18 +57,4 @@
        <div class="content_box_contentWrapper"><?php echo $this->scol?></div>
   </div>
  <div class="clear"></div>
-<div id="edit-form" style="display: none;">
-  <div class="dialog-frame">
-    <div class="dialog-header">
-      <span>Eintrag bearbeiten</span><a href="../" onClick="closeEditDialog(); return false;">X</a>
-    </div>
-    <div class="dialog-body">
-      <form method="post" action="?">
-        <input type="hidden" value="" name="v_id" />
-        <input type="text" name="v_value" /><br />
-        <textarea name="v_text"></textarea><br />
-        <input type="submit" onClick="editEntry(); return false;" value="hinzu" />
-      </form>
-    </div>
-  </div>
 </div>

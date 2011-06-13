@@ -12,12 +12,12 @@
   <div class="entry <?php if($now) echo 'now'; ?>" id="<?php echo $id?>">
 
     <?php foreach($posts as $post):?>
-        <div class="sub_entry">
+        <div class="sub_entry" id="<?php echo $post['money_id']?>">
 		    <div class="item-left left">
 		      <span class="value"><?php echo $post['value']; ?> </span><br />
                       <?php if($post['user_id'] !== '') { ?>
                      <div class="edit left" title="Eintrag bearbeiten" onClick="edit(<?php echo $post['money_id']?>); return false;"></div>
-		      <div class="delete left" title="Eintrag löschen" onClick="delete(<?php echo $post['money_id'] ?>); return false;"></div>
+		      <div class="delete left" title="Eintrag löschen" onClick="deleteEntry(<?php echo $post['money_id'] ?>); return false;"></div>
                       <?php } ?>
 		    </div>
             <span class="comment right"><?php echo ($post['comment'])?> </span>

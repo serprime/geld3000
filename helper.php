@@ -19,6 +19,7 @@ function buildColumn($posts, $id) {
     }
     $sums[$m] = sprintf("%.2f", $sums[$m]);
   }
+  
   // build view
   $columnTemplate = new View();
   $columnTemplate->id = $id;
@@ -27,4 +28,19 @@ function buildColumn($posts, $id) {
   return $columnTemplate->render('column.php');
 }
 
+function showErrorMessage($message) {
+    ?>
+    <script type="text/javascript">
+        showErrorMessage('<?php echo $message?>');
+    </script>
+<?php
+}
+
+function showSuccessMessage($message) {
+    ?>
+    <script type="text/javascript">
+        showSuccessMessage('<?php echo $message?>');
+    </script>
+<?php
+}
 ?>

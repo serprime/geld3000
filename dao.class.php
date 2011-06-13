@@ -38,11 +38,11 @@ class Dao {
         $_SESSION['username'] = $username;
         if ($username == 'vielieb') $_SESSION['user_id'] = 1;
         elseif ($username == 'sarah') $_SESSION['user_id'] = 2;
-        return "eingeloogt...";
+        return "1";
     }
     $_SESSION['loggedin'] = false;
     $_SESSION['username'] = '';
-    return "ungueltiges passwort oder email oder so..";
+    return "-1";
   }
 
   public function logout() {
@@ -54,18 +54,23 @@ class Dao {
   // get vals from POST and save
   public function save($post) {
     $user_id = $_SESSION['user_id'];
-    $val = $_POST['value'];
-    $comment = addslashes(htmlentities($_POST['notes'], ENT_QUOTES, 'utf-8'));
+    $val = $post['value'];
+    $comment = addslashes(htmlentities($post['notes'], ENT_QUOTES, 'utf-8'));
     $val = (str_replace(',', '.', $val));
     
     if( !is_numeric($val) )
-      return "He du Oasch, des war jetzt aber ka Zahl!";
+      return '-2';
 
-    echo $q = sprintf("INSERT INTO money (user_id, value, comment) VALUES (%s, %s, '%s')", $user_id, $val, $comment);
+    $q = sprintf("INSERT INTO money (user_id, value, comment) VALUES (%s, %s, '%s')", $user_id, $val, $comment);
+   
     if (mysql_query($q)) {
-      return "ok, eintrag sollte in der db sein.";
+        $new_id = mysql_insert_id();
+        $fancyStuff = $this->calcDiff();
+        $fancyStuff['money_id'] = "".$new_id."";
+     return json_encode($fancyStuff);
     } else {
-      return sprintf("uijee, fehler in da query: <pre>%s</pre>", $q);
+      //return sprintf("uijee, fehler in da query: <pre>%s</pre>", $q);
+        return '-1';
     }
   }
   
@@ -85,7 +90,40 @@ class Dao {
 
     return $ret;
   }
-  
+
+  public function getPost($post_id) {
+      $q = sprintf("SELECT * FROM money WHERE money_id = %s", $post_id);
+      $result = mysql_query($q);
+      $row = mysql_fetch_assoc($result);
+      $post_array = array();
+      $post_array['value'] = $row['value'];
+      $post_array['note'] = html_entity_decode($row['comment'], ENT_QUOTES, 'utf-8');
+      $post_json = json_encode($post_array);
+      
+      return $post_json;
+  }
+
+  public function editPost($id, $val, $note) {
+      $note = addslashes(htmlentities($note, ENT_QUOTES, 'utf-8'));
+      $q = sprintf("UPDATE money SET value='%s', comment='%s' WHERE money_id='%s'", $val, $note, $id);
+
+
+      if(mysql_query($q)) {
+          return json_encode($this->calcDiff());
+      } else {
+          return '-1';
+      }
+  }
+
+  public function deletePost($id) {
+      $q = sprintf("DELETE FROM money WHERE money_id = %s", $id);
+      if(mysql_query($q)) {
+         return json_encode($this->calcDiff());
+      } else {
+          return '-1';
+      }
+  }
+
   public function calcDiff() {
     $names = array(1=>'vielieb', 2=>'sarah');
     $q = "SELECT user_id, sum(value) as sum FROM money GROUP BY user_id";

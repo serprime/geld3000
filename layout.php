@@ -8,14 +8,27 @@
   </head>
   <body>
 
-      <div class="error">
-          <?php foreach($this->flash as $msg):?>
-              <?php echo $msg?>
-          <?php endforeach?>
-      </div>
-
+     
       <div id="wrapper">
           <?php echo $this->content?>
       </div>
+      <div id="overlay">
+          <div id="edit-form">
+              <div class="dialog-frame">
+                <div class="dialog-header">
+                  <span>Eintrag bearbeiten</span><span class="close right" onClick="closeEditDialog(); return false;" title="schließen">X</span>
+                </div>
+                <div class="dialog-body">
+                  <form method="post" action="?">
+                      <label for="betrag" class="eintrag_form_label left">Betrag</label>
+                      <input class="left" id="edit_value" type="text" name="value" /><span class="euro left">€</span><br /><div class="clear"></div>
+                      <label for="notes" class="eintrag_form_label left">Notes</label>
+                      <textarea class="left" id="edit_note" name="notes"></textarea><br />
+                      <input onClick="editEntry(); return false;" type="submit" name="edit_submit" class="right" value="" />
+                  </form>
+                </div>
+              </div>
+            </div>
+       </div>
   </body>
 </html>

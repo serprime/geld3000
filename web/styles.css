@@ -104,7 +104,7 @@ input, select {
 /*******************/
 body {
 	font-size: 14px;
-	background: url('images/master_bg.jpg') repeat;
+	background: url('../images/master_bg.jpg') repeat;
 	font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
 	color: #3b3b3b;
         width:100%;
@@ -221,9 +221,13 @@ textarea {
 	width: 400px;
 }
 
+input[type="checkbox"] {
+  width: auto;
+}
+
 input[type="submit"] {
         margin-bottom: 0px;
-        background: url('images/submit_normal.png') no-repeat;
+        background: url('../images/submit_normal.png') no-repeat;
 	height: 36px;
         width:139px;
 	cursor:pointer;
@@ -232,13 +236,14 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover, input[type="submit"]:focus {
-   background: url('images/submit_hover.png') no-repeat;
+   background: url('../images/submit_hover.png') no-repeat;
 }
+
 
 /*** LOGIN ***/
 
 #login-container {
-	background: url('images/login_bg.png') no-repeat transparent center center;
+	background: url('../images/login_bg.png') no-repeat transparent center center;
 	width: 659px;
 	height:235px;
 	margin: 0 auto;
@@ -344,7 +349,7 @@ header div.header_logout a:link:hover {
   left: 0px;
   width: 13px;
   height: 10px;
-  background: url('images/blau_ecke.png') no-repeat bottom left;
+  background: url('../images/blau_ecke.png') no-repeat bottom left;
 }
 
 .info_box_content {
@@ -371,7 +376,7 @@ header div.header_logout a:link:hover {
     position:absolute;
     bottom:10px;
     left: 85px;
-    background: url('images/verzierung.png') no-repeat bottom center;
+    background: url('../images/verzierung.png') no-repeat bottom center;
     width: 54px;
     height:17px;
 }
@@ -384,6 +389,7 @@ header div.header_logout a:link:hover {
     background-color: rgba(114,114,114,0.20);
     -moz-box-shadow: inset 0px 1px 5px rgba(33,33,33,0.5);
     -webkit-box-shadow: inset 0px 1px 5px rgba(33,33,33,0.5);
+    text-align: left;
 }
 
 .eintrag_form_label {
@@ -422,7 +428,7 @@ header div.header_logout a:link:hover {
 
 .diff_box {
     position: absolute;
-    background: url('images/value_box.png') no-repeat;
+    background: url('../images/value_box.png') no-repeat;
     width:329px;
     height:113px;
     top:27px;
@@ -500,11 +506,11 @@ header div.header_logout a:link:hover {
 }
 
 .content_box_schrage.right {
-    background: url('images/box_schrage_rechts.png') no-repeat;  
+    background: url('../images/box_schrage_rechts.png') no-repeat;  
 }
 
 .content_box_schrage.left {
-    background: url('images/box_schrage_links.png') no-repeat;
+    background: url('../images/box_schrage_links.png') no-repeat;
 }
 
 /* INHALT */
@@ -549,11 +555,11 @@ header div.header_logout a:link:hover {
 }
 
 .month span.arrow.closed {
-   background: url('images/pfeil_zu.png') no-repeat;
+   background: url('../images/pfeil_zu.png') no-repeat;
 }
 
 .month span.arrow.open {
-   background: url('images/pfeil_offen.png') no-repeat;
+   background: url('../images/pfeil_offen.png') no-repeat;
 }
 
     /* ENTRIES */
@@ -584,7 +590,7 @@ header div.header_logout a:link:hover {
     height: 1px;
     width:371px;
     margin-top: 10px;
-    background: url('images/entry_border.png') no-repeat;
+    background: url('../images/entry_border.png') no-repeat;
 }
 .item_left {
     width: 70px;
@@ -594,27 +600,27 @@ header div.header_logout a:link:hover {
 .edit {
     width:16px;
     height:16px;
-    background: url('images/pen_normal.png') no-repeat;
+    background: url('../images/pen_normal.png') no-repeat;
     padding:4px;
      margin-top: 4px;
 }
 
 .edit:hover, .edit:focus {
     cursor: pointer;
-    background: url('images/pen_hover.png') no-repeat;
+    background: url('../images/pen_hover.png') no-repeat;
 }
 
 .delete {
     width:13px;
     height:16px;
-    background: url('images/delete_normal.png') no-repeat;
+    background: url('../images/delete_normal.png') no-repeat;
     padding:4px;
     margin-top: 4px;
 }
 
 .delete:hover, .delete:focus {
     cursor:pointer;
-    background: url('images/delete_hover.png') no-repeat;
+    background: url('../images/delete_hover.png') no-repeat;
 }
 
 .comment {

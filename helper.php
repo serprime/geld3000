@@ -15,7 +15,10 @@ function buildColumn($posts, $id) {
   foreach($res as $m => $vals) {
     $sums[$m] = 0;
     foreach($vals as $val) {
-      $sums[$m] += $val['value'];
+      if ($val['both'])
+        $sums[$m] += $val['value'] / 2;
+      else
+        $sums[$m] += $val['value'];
     }
     $sums[$m] = sprintf("%.2f", $sums[$m]);
   }
@@ -23,24 +26,12 @@ function buildColumn($posts, $id) {
   // build view
   $columnTemplate = new View();
   $columnTemplate->id = $id;
+  if ($id == 1) $other = "Sarah";
+  else $other = "Vielieb";
+  $columnTemplate->other = $other;
   $columnTemplate->posts = $res;
   $columnTemplate->sums = $sums;
-  return $columnTemplate->render('column.php');
+  return $columnTemplate->render('templates/column.php');
 }
 
-function showErrorMessage($message) {
-    ?>
-    <script type="text/javascript">
-        showErrorMessage('<?php echo $message?>');
-    </script>
-<?php
-}
-
-function showSuccessMessage($message) {
-    ?>
-    <script type="text/javascript">
-        showSuccessMessage('<?php echo $message?>');
-    </script>
-<?php
-}
 ?>

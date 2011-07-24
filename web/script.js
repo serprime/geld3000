@@ -54,6 +54,7 @@ function calcDiff(id, val) {
 }
 
 function showErrorMessage(message) {
+    console.log(message);
     $('.message.error').text(message);
     $('.message.error').fadeIn('slow');
 }
@@ -80,16 +81,28 @@ function deleteEntry(id) {
 }
 
 function addEntry() {
+    console.log('add entry');
     var value = $('#addValue').val();
     var note = $('#addNote').val();
+    var sarah = $('#sarah').prop('checked');
+    var vielieb = $('#vielieb').prop('checked');
+    console.log(sarah);
+    console.log(vielieb);
 
-    $.getJSON("index.php/?post_add=1&post_val="+value+"&post_note="+note, function(data) {
-        if(data == '-1') {
-            showErrorMessage("Eintrag konnte nicht eingetragen werden!");
-        } else {
-           window.location.reload();
+    $.getJSON("index.php/"
+        +"?post_add=1"
+        +"&post_val="+value
+        +"&post_note="+note
+        +"&post_vielieb="+vielieb
+        +"&post_sarah="+sarah, 
+        function(data) {
+          if(data == '-1') {
+              showErrorMessage("Eintrag konnte nicht eingetragen werden!");
+          } else {
+             window.location.reload();
+          }
         }
-    });
+    );
 }
 
 function edit(id) {

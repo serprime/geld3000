@@ -61,7 +61,11 @@ class Dao {
     if( !is_numeric($val) )
       return '-2';
 
-    $q = sprintf("INSERT INTO money (user_id, value, comment) VALUES (%s, %s, '%s')", $user_id, $val, $comment);
+    if(isset($post['both']) && $post['both']=="on") $both = 1;
+    else $both = 0;
+    
+    $q = sprintf("INSERT INTO money (user_id, `both`, value, comment) 
+                  VALUES (%s, %s, %s, '%s')", $user_id, $both, $val, $comment);
    
     if (mysql_query($q)) {
         $new_id = mysql_insert_id();
@@ -70,6 +74,7 @@ class Dao {
      return json_encode($fancyStuff);
     } else {
       //return sprintf("uijee, fehler in da query: <pre>%s</pre>", $q);
+        echo $q;
         return '-1';
     }
   }
@@ -97,6 +102,7 @@ class Dao {
       $row = mysql_fetch_assoc($result);
       $post_array = array();
       $post_array['value'] = $row['value'];
+      $post_array['both'] = $row['both'];
       $post_array['note'] = html_entity_decode($row['comment'], ENT_QUOTES, 'utf-8');
       $post_json = json_encode($post_array);
       
@@ -106,7 +112,6 @@ class Dao {
   public function editPost($id, $val, $note) {
       $note = addslashes(htmlentities($note, ENT_QUOTES, 'utf-8'));
       $q = sprintf("UPDATE money SET value='%s', comment='%s' WHERE money_id='%s'", $val, $note, $id);
-
 
       if(mysql_query($q)) {
           return json_encode($this->calcDiff());
@@ -126,13 +131,18 @@ class Dao {
 
   public function calcDiff() {
     $names = array(1=>'vielieb', 2=>'sarah');
-    $q = "SELECT user_id, sum(value) as sum FROM money GROUP BY user_id";
+    // query for sum of values for both
+    $q = "SELECT user_id, sum(`value`/2) as sum FROM money WHERE `both` = true GROUP BY user_id
+          UNION SELECT user_id, sum(`value`) as sum FROM money WHERE `both` = false GROUP BY user_id";
     $result = mysql_query($q);
+    $res = array(1=>0, 2=>0);
     while ($row = mysql_fetch_assoc($result)) {
       $user_id = $row['user_id'];
       $amount = $row['sum'];
-      $res[$user_id] = $amount;
+      if (!key_exists($user_id, $res)) $res[$user_id] = 0;
+      $res[$user_id] += $amount;
     }
+    
     if ($res[1] > $res[2]) {
       $u = $names[1];
       $a = $res[1] - $res[2];

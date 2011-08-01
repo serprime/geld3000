@@ -19,43 +19,70 @@ if (isset($_GET) && key_exists('logout', $_GET)) {
 }
 
 //
-// js zeug
+// ajax zeug
 //
+if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 
-
-// fetch single entry
-if(isset($_GET['post_id']) && $_GET['post_id'] != '') {
-    $post_id = $_GET['post_id'];
-    echo $dao->getPost($post_id);
-    die;
-}
-
-// update post per GET
-if(isset($_GET['edit_post']) && $_GET['edit_post'] != '') { 
+  // update post per GET
+  if(isset($_GET['edit_post']) && $_GET['edit_post'] != '') { 
     $post_id = $_GET['edit_post'];
-    $value = $_GET['value'];
-    $note = $_GET['note'];
-    echo $dao->editPost($post_id, $value, $note);
+    $value = $_POST['value'];
+    $note = $_POST['note'];
+    $both = $_POST['both'];
+    if ($dao->editPost($post_id, $value, $note, $both)) {
+      $obj = $dao->calcDiff();
+      if (!$both) {
+        if ($_SESSION['user_id'] == 1) {
+          $obj['other'] = "Sarah";
+        } else {
+          $obj['other'] = "Vielieb";
+        }
+      } else {
+        $obj['other'] = "beide";
+      }
+      echo json_encode($obj);
+    } else {
+      echo "-1";
+    }
     die;
+  }
+
+  // fetch single entry
+  if(isset($_GET['post_id']) && $_GET['post_id'] != '') {
+      // VALIDATE
+      $post_id = $_GET['post_id'];
+      if (!is_numeric($post_id)) die("-1");
+      $post = $dao->getPost($post_id);
+      echo $post_json = json_encode($post);
+      die;
+  }
+
+  if(isset($_GET['ajax_add'])) {
+    echo $dao->save($_POST);
+    die;
+  }
+
+  if(isset($_GET['ajax_delete'])) {
+    $post_id = $_GET['delete_id'];
+    if ($dao->deletePost($post_id))
+      echo json_encode($dao->calcDiff());
+    else
+      echo "-1";
+    die;
+  }
+  
+  die("YOU SHALL NOT SEE THIS MESSAGE!");
 }
+
+
+
+
+
+
 
 // delete handler
-if(isset($_GET['delete_post']) && $_GET['delete_post'] != '') {
-    $post_id = $_GET['delete_post'];
-    echo $dao->deletePost($post_id);
-    die;
-}
 
-// post form handler
-if(isset($_GET['post_add']) && $_GET['post_add'] != '') {
-    $post = array();
-    $post['value'] = $_GET['post_val'];
-    $post['notes'] = $_GET['post_note'];
-    $post['vielieb'] = $_GET['post_vielieb'];
-    $post['sarah'] = $_GET['post_sarah'];
-    echo $dao->save($post);
-    die;
-}
+
 
 //
 // MAIN

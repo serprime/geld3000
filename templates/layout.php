@@ -25,7 +25,7 @@
                       <input class="left" id="edit_value" type="text" name="value" /><span class="euro left">€</span><br /><div class="clear"></div>
                       
                       <label for="edit_both" class="eintrag_form_label left">Beide?</label>
-                      <input id="edit_both" class="left" type="checkbox" name="edit_both" checked="checked" /><br />
+                      <input id="edit_both" class="left" type="checkbox" value="on" name="edit_both" checked="checked" /><br />
 
                       <div class="clear"></div>
                       

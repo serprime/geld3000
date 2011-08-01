@@ -102,30 +102,30 @@ class Dao {
       $row = mysql_fetch_assoc($result);
       $post_array = array();
       $post_array['value'] = $row['value'];
-      $post_array['both'] = $row['both'];
+      $post_array['user_id'] = $row['user_id'];
+      $post_array['both'] = $row['both']==1?true:false;
       $post_array['note'] = html_entity_decode($row['comment'], ENT_QUOTES, 'utf-8');
-      $post_json = json_encode($post_array);
-      
-      return $post_json;
+      return $post_array;
   }
 
-  public function editPost($id, $val, $note) {
+  public function editPost($id, $val, $note, $both) {
+      if (!is_numeric($id)) {die ("bitte um eine nummer für die id!");}
       $note = addslashes(htmlentities($note, ENT_QUOTES, 'utf-8'));
-      $q = sprintf("UPDATE money SET value='%s', comment='%s' WHERE money_id='%s'", $val, $note, $id);
+      $q = sprintf("UPDATE money SET value='%s', both=%s, comment='%s' WHERE money_id='%s'", $val, $both, $note, $id);
 
       if(mysql_query($q)) {
-          return json_encode($this->calcDiff());
+          return true;
       } else {
-          return '-1';
+          return false;
       }
   }
 
   public function deletePost($id) {
       $q = sprintf("DELETE FROM money WHERE money_id = %s", $id);
       if(mysql_query($q)) {
-         return json_encode($this->calcDiff());
+          return true;
       } else {
-          return '-1';
+          return false;
       }
   }
 

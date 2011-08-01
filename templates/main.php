@@ -50,7 +50,7 @@
             
             <label for="notes" class="eintrag_form_label left">Notes</label>
             <textarea class="left" id="addNote" name="notes"></textarea><br />
-            <input type="submit" onClick="return true;addEntry();return false;" class="right" value="" />
+            <input type="submit" onClick="addEntry();return false;" class="right" value="" />
           </form>
         </div>
     </div>

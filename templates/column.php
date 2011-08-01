@@ -12,7 +12,7 @@
   <div class="entry <?php if($now) echo 'now'; ?>" id="<?php echo $id?>">
 
     <?php foreach($posts as $post):?>
-        <div class="sub_entry" id="<?php echo $post['money_id']?>">
+        <div class="sub_entry<?php echo $post['both']? " both" :"" ?>" id="<?php echo $post['money_id']?>">
 		    <div class="item-left left">
 		      <span class="value"><?php echo $post['value']; ?><?php echo $post['both']? " / 2" :"" ?></span><br />
           <?php if($post['user_id'] !== ''):?>
@@ -24,8 +24,9 @@
 	          </div>
           <?php endif ?>
 		    </div>
-        <span class="comment right">[f&uuml;r <?php echo $post['both']?"beide":$this->other?>]</span>
+        
         <span class="comment right"><?php echo ($post['comment'])?> </span>
+        <span class="both right">[f&uuml;r <?php echo $post['both']?"beide":$this->other?>]</span>
         
 		    <div class="clear"></div>
         <div class="sub_entry_line"></div>

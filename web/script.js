@@ -31,6 +31,9 @@ function closeArrow(elem_id) {
    month.addClass('closed');
 }
 
+
+
+
 function calcSum(id, val) {
      var valNow = $('#'+id).parent().find('.monthly-sum span').last().text();
     valNow = parseFloat(valNow);
@@ -43,15 +46,23 @@ function calcSum(id, val) {
     $('#'+id).parent().find('.monthly-sum span').last().text(newVal);
 }
 
-function calcDiff(id, val) {
-    var valNow = $('#'+id).parent().find('.monthly-sum span').last().text();
-    valNow = parseFloat(valNow);
-    val = parseFloat(val);
-    var newVal = valNow - val;
-    newVal = newVal.toFixed(2);
+function calcDiff(id) {
+  var val = parseFloat($('#'+id).find('.value').text());
+  
+  var valNow = $('#'+id).parent().find('.monthly-sum span').last().text();
+  valNow = parseFloat(valNow);
+  
+  var both = $('#'+id).hasClass("both");
+  if(both) {val = val/2;}
+  
+  var newVal = valNow - val;
+  newVal = newVal.toFixed(2);
 
-    $('#'+id).parent().find('.monthly-sum span').last().text(newVal);
+  $('#'+id).parent().find('.monthly-sum span').last().text(newVal);
 }
+
+
+
 
 function showErrorMessage(message) {
     console.log(message);
@@ -64,74 +75,89 @@ function showSuccessMessage(message) {
     $('.message.success').fadeIn('slow');
 }
 
+
+
+
 function deleteEntry(id) {
-    $.getJSON("index.php?delete_post="+id,function(msg){
-           if(msg != '-1') {
-              var value = $('#'+id).find('.value').text();        
-              calcDiff(id, value);
-              $('#'+id).remove();
-              $('#diff').find('.diff_value').html('€ '+msg.diffAmount);
-              $('#diff').find('.diff_name').html(msg.diffUsername);
-              showSuccessMessage("Eintrag wurde gelöscht!");
-           } else {
-              showErrorMessage("Eintrag konnte nicht gelöscht werden, weil der Vielieb so langsam ist!");
-           }
-       
-    });
+  $.ajax({
+    url: "index.php?ajax_delete",
+    data: "delete_id="+id,
+    success: function(msg){
+      if(msg != '-1') {
+        var obj = JSON.parse(msg);
+        // refresh sum of month and rmeove item
+        
+        calcDiff(id);
+        $('#'+id).remove();
+        // refresh diff value on top
+        $('#diff').find('.diff_value').html('€ ' + obj.diffAmount);
+        $('#diff').find('.diff_name').html(obj.diffUsername);
+        showSuccessMessage("Eintrag wurde gelöscht!");
+      } else {
+         showErrorMessage("Eintrag konnte nicht gelöscht werden, weil der Vielieb so langsam ist!");
+      }
+    },
+    error: function() {showErrorMessage("Fehler bei der Kommunikation mit dem Server!");}
+  });
 }
 
 function addEntry() {
     console.log('add entry');
     var value = $('#addValue').val();
     var note = $('#addNote').val();
-    var sarah = $('#sarah').prop('checked');
-    var vielieb = $('#vielieb').prop('checked');
-    console.log(sarah);
-    console.log(vielieb);
-
-    $.getJSON("index.php/"
-        +"?post_add=1"
-        +"&post_val="+value
-        +"&post_note="+note
-        +"&post_vielieb="+vielieb
-        +"&post_sarah="+sarah, 
-        function(data) {
-          if(data == '-1') {
-              showErrorMessage("Eintrag konnte nicht eingetragen werden!");
-          } else {
-             window.location.reload();
-          }
+    var both = $('#both').prop('checked');
+    if (both) {both = "on"}
+    else {both = "off"}
+    $.ajax({
+      url: "index.php?ajax_add",
+      type: "POST",
+      data: "value="+value+
+            "&notes="+note+
+            "&both="+both,
+      success: function (data) {
+        if(data == '-1') {
+          showErrorMessage("Eintrag konnte nicht eingetragen werden!");
+        } else {
+          window.location.reload();
         }
-    );
-}
-
-function edit(id) {
- var value = 0;
- var note = '';
- $.getJSON("index.php/?post_id="+id, function(data) {
-
-    value = data.value;
-    note = data.note;
-    $('#edit_value').val(value);
-    $('#edit_note').val(note);
-    var formi = $('#edit-form').find('form');
-    formi.addClass(''+id+'');
-    
- });
-  $('#overlay').fadeIn('slow');
-  centerPopup();
-}
-
-function closeEditDialog() {
-    $('#overlay').fadeOut('slow');
+      },
+      error: function() {showErrorMessage("Fehler bei der Kommunikation mit dem Server!");}
+    });
 }
 
 function editEntry() {
-   var post_id =  $('#edit-form').find('form').attr('class');
+  var post_id =  $('#edit-form').find('form').attr('class');
+  
+  var value = $('#edit_value').val();
+  var note = $('#edit_note').val();
+  var both = $('#edit_both').prop('checked');
+  
+  $.ajax({
+    url: "index.php/?edit_post="+post_id,
+    type: "POST",
+    data: "value="+value+"&note="+note+"&both="+both,
+    success: function (data) {
+      if (data != "-1") {
+        var obj = JSON.parse(data);
+        calcSum(post_id, value);
+        $('#overlay').fadeOut('slow');
+        $('#diff').find('.diff_value').html('€ '+obj.diffAmount);
+        $('#diff').find('.diff_name').html(obj.diffUsername);
+        var container = $('#'+post_id);
+        if (both==true) {value = value + " / 2";}
+        container.find('.value').html(value);
+        container.find('.comment').html(note);
+        
+        container.find('.both').html("[f&uuml;r "+obj.other+"]");
+        showSuccessMessage("Eintrag wurde erfolgreich geändert");
+      } else {
+        showErrorMessage("Fehler am Server.");
+      }
+    },
+    error: function() {showErrorMessage("Fehler bei der Kommunikation mit dem Server!");}
+  });
    
-   var value = $('#edit_value').val();
-   var note = $('#edit_note').val();
-   
+   /*
    $.getJSON("index.php/?edit_post="+post_id+"&value="+value+"&note="+note,function(msg){
            if(msg != '-1') {
 
@@ -147,7 +173,37 @@ function editEntry() {
             showErrorMessage("Eintrag konnte nicht geändert werden. BAM OIDA!");
         }
    });
+   */
 }
+
+
+function edit(id) {
+ var value = 0;
+ var note = '';
+ var both = true;
+ $.getJSON("index.php/?post_id="+id, function(data) {
+
+    value = data.value;
+    note = data.note;
+    both = data.both;
+    $('#edit_value').val(value);
+    $('#edit_note').val(note);
+    $('#edit_both').prop('checked', both);
+    var formi = $('#edit-form').find('form');
+    formi.addClass(''+id+'');
+    
+ });
+  $('#overlay').fadeIn('slow');
+  centerPopup();
+}
+
+function closeEditDialog() {
+    $('#overlay').fadeOut('slow');
+}
+
+
+
+
 
 function centerPopup(){
 	var scrolledX, scrolledY;
